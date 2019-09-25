@@ -12,11 +12,11 @@ spec:
       nodeSelector:
         "beta.kubernetes.io/os": linux
       containers:
-      - name: azure-vote-back
-        image: redis
-        ports:
-        - containerPort: 6379
-          name: redis
+        - name: azure-vote-back
+          image: redis
+          ports:
+            - containerPort: 6379
+              name: redis
 ---
 apiVersion: v1
 kind: Service
@@ -24,7 +24,7 @@ metadata:
   name: azure-vote-back
 spec:
   ports:
-  - port: 6379
+    - port: 6379
   selector:
     app: azure-vote-back
 ---
@@ -38,7 +38,7 @@ spec:
     rollingUpdate:
       maxSurge: 1
       maxUnavailable: 1
-  minReadySeconds: 5 
+  minReadySeconds: 5
   template:
     metadata:
       labels:
@@ -47,18 +47,18 @@ spec:
       nodeSelector:
         "beta.kubernetes.io/os": linux
       containers:
-      - name: azure-vote-front
-        image: microsoft/azure-vote-front:v1
-        ports:
-        - containerPort: 80
-        resources:
-          requests:
-            cpu: 250m
-          limits:
-            cpu: 500m
-        env:
-        - name: REDIS
-          value: "azure-vote-back"
+        - name: azure-vote-front
+          image: mojrejestr.azurecr.io/azure-vote-front:v1
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              cpu: 250m
+            limits:
+              cpu: 500m
+          env:
+            - name: REDIS
+              value: "azure-vote-back"
 ---
 apiVersion: v1
 kind: Service
@@ -67,6 +67,6 @@ metadata:
 spec:
   type: LoadBalancer
   ports:
-  - port: 80
+    - port: 80
   selector:
     app: azure-vote-front
